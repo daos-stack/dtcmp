@@ -1,0 +1,8 @@
+--- dtcmp-1.0.3/src/Makefile.am~	2014-02-22 00:10:10.000000000 +0000
++++ dtcmp-1.0.3/src/Makefile.am	2017-09-20 21:09:19.208796232 +0100
+@@ -51,4 +51,4 @@
+   dtcmp_seg_exscan.c
+ libdtcmp_la_CFLAGS = $(INCLUDES)
+ libdtcmp_la_LIBADD = $(LWGRP_LDFLAGS) $(LWGRP_LIBS)
+-libdtcmp_la_LDFLAGS = -avoid-version
++libdtcmp_la_LDFLAGS = -version-number=0:0:0
