@@ -160,7 +160,7 @@ done
 
 %files common
 %license LICENSE.TXT
-%doc README
+%doc README.md
 
 %if %{with_openmpi3}
 %if (0%{?suse_version} >= 1500)
