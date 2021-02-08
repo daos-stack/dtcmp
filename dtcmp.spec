@@ -36,8 +36,8 @@
 %endif
 
 Name:		dtcmp
-Version:	1.1.0
-Release:	1.2%{?dist}
+Version:	1.1.1
+Release:	1%{?dist}
 Summary:	Datatype Compare Library for sorting and ranking distributed data using MPI
 License:	BSD
 URL:		https://github.com/LLNL/dtcmp
@@ -160,7 +160,7 @@ done
 
 %files common
 %license LICENSE.TXT
-%doc README
+%doc README.md
 
 %if %{with_openmpi3}
 %if (0%{?suse_version} >= 1500)
@@ -191,6 +191,9 @@ done
 %endif
 
 %changelog
+* Thu Feb 04 2021 Dalton A. Bohning <daltonx.bohning@intel.com> - 1.1.1-1
+- Update to version 1.1.1
+
 * Mon Sep 28 2020 Brian J. Murrell <brian.murrell@intel.com> - 1.0.3-1.2
 - Add patch to fix lwgrp discovery
 - Package for multiple MPI stacks and multiple distros
