@@ -1,6 +1,11 @@
 %global with_mpich 1
+%if (0%{?rhel} >= 8)
+%global with_openmpi 1
+%global with_openmpi3 0
+%else
 %global with_openmpi 0
 %global with_openmpi3 1
+%endif
 
 %if (0%{?suse_version} >= 1500)
 %global module_load() if [ "%{1}" == "openmpi3" ]; then MODULEPATH=/usr/share/modules module load gnu-openmpi; else MODULEPATH=/usr/share/modules module load gnu-%{1}; fi
@@ -37,7 +42,7 @@
 
 Name:		dtcmp
 Version:	1.1.1
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Datatype Compare Library for sorting and ranking distributed data using MPI
 License:	BSD
 URL:		https://github.com/LLNL/dtcmp
@@ -63,6 +68,26 @@ Summary:	Datatype Compare Library for sorting and ranking distributed data using
 The Datatype Comparison (DTCMP) Library provides pre-defined and
 user-defined comparison operations to compare the values of two items
 which can be arbitrary MPI datatypes.
+
+%if %{with_openmpi}
+%package openmpi
+Summary:	Datatype Compare Library for sorting and ranking distributed data using MPI
+BuildRequires:	openmpi-devel
+BuildRequires:	lwgrp-openmpi-devel
+
+%description openmpi
+The Datatype Comparison (DTCMP) Library provides pre-defined and
+user-defined comparison operations to compare the values of two items
+which can be arbitrary MPI datatypes.
+
+%package openmpi-devel
+Summary:	Development files for %{name}-openmpi
+Requires: lwgrp-openmpi-devel
+Requires:	%{name}-openmpi%{?_isa} = %version-%release
+
+%description openmpi-devel
+Development files for %{name}-openmpi.
+%endif
 
 %if %{with_openmpi3}
 %package openmpi3
@@ -93,7 +118,7 @@ Requires:	%{name}-openmpi3%{?_isa} = %version-%release
 %endif
 
 %description openmpi3-devel
-Development files for %{name}-openmpi3
+Development files for %{name}-openmpi3.
 %endif
 
 %if %{with_mpich}
@@ -125,7 +150,7 @@ Requires:	%{name}-mpich%{?_isa} = %version-%release
 %endif
 
 %description mpich-devel
-Development files for %{name}-mpich
+Development files for %{name}-mpich.
 %endif
 
 %prep
@@ -156,11 +181,22 @@ for mpi in %{?mpi_list}; do
   %make_install -C $mpi
   rm %{buildroot}/%{mpi_libdir}/$mpi/%{mpi_lib_ext}/*.la
   rm -r %{buildroot}%{_datadir}/dtcmp
+  module purge
 done
 
 %files common
 %license LICENSE.TXT
 %doc README.md
+
+%if %{with_openmpi}
+%files openmpi
+%{mpi_libdir}/openmpi/%{mpi_lib_ext}/libdtcmp.so.*
+
+%files openmpi-devel
+%{mpi_includedir}/openmpi%{mpi_include_ext}/dtcmp.h
+%{mpi_libdir}/openmpi/%{mpi_lib_ext}/libdtcmp.so
+%{mpi_libdir}/openmpi/%{mpi_lib_ext}/pkgconfig/libdtcmp.pc
+%endif
 
 %if %{with_openmpi3}
 %if (0%{?suse_version} >= 1500)
@@ -191,6 +227,9 @@ done
 %endif
 
 %changelog
+* Mon May 17 2021 Brian J. Murrell <brian.murrell@intel.com> - 1.1.1-2
+- Package for openmpi on EL8
+
 * Thu Feb 04 2021 Dalton A. Bohning <daltonx.bohning@intel.com> - 1.1.1-1
 - Update to version 1.1.1
 
