@@ -4,7 +4,8 @@ Uploaders: Brian J. Murrell <brian.murrell@intel.com>
 Section: devel
 Priority: optional
 Build-Depends: debhelper-compat (= 12),
-               liblwgrp-mpich-dev
+               liblwgrp-mpich-dev,
+               libmpich-dev
 Standards-Version: 4.4.1.0
 Vcs-Browser: https://github.com/LLNL/dtcmp
 Vcs-Git: https://github.com/LLNL/dtcmp.git
