@@ -1,5 +1,5 @@
---- dtcmp-1.0.3/src/Makefile.am~	2014-02-22 00:10:10.000000000 +0000
-+++ dtcmp-1.0.3/src/Makefile.am	2017-09-20 21:09:19.208796232 +0100
+--- dtcmp-1.1.4/src/Makefile.am~	2014-02-22 00:10:10.000000000 +0000
++++ dtcmp-1.1.4/src/Makefile.am	2017-09-20 21:09:19.208796232 +0100
 @@ -51,4 +51,4 @@
    dtcmp_seg_exscan.c
  libdtcmp_la_CFLAGS = $(INCLUDES)
