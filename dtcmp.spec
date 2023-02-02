@@ -60,14 +60,6 @@ The Datatype Comparison (DTCMP) Library provides pre-defined and
 user-defined comparison operations to compare the values of two items
 which can be arbitrary MPI datatypes.
 
-%package common
-Summary:	Datatype Compare Library for sorting and ranking distributed data using MPI
-
-%description common
-The Datatype Comparison (DTCMP) Library provides pre-defined and
-user-defined comparison operations to compare the values of two items
-which can be arbitrary MPI datatypes.
-
 %if %{with_openmpi}
 %package openmpi
 Summary:	Datatype Compare Library for sorting and ranking distributed data using MPI
@@ -180,10 +172,6 @@ for mpi in %{?mpi_list}; do
   rm -r %{buildroot}%{_datadir}/dtcmp
   module purge
 done
-
-%files common
-%license LICENSE.TXT
-%doc README.md
 
 %if %{with_openmpi}
 %files openmpi
