@@ -41,14 +41,13 @@
 %endif
 
 Name:		dtcmp
-Version:	1.1.1
-Release:	2%{?dist}
+Version:	1.1.4
+Release:	1%{?dist}
 Summary:	Datatype Compare Library for sorting and ranking distributed data using MPI
 License:	BSD
 URL:		https://github.com/LLNL/dtcmp
 Source0:	https://github.com/LLNL/dtcmp/releases/download/v%version/dtcmp-%version.tar.gz
-Patch1:		dtcmp-lwgrp.patch
-Patch2:		dtcmp-sover.patch
+Patch1:		dtcmp-sover.patch
 BuildRequires:	automake
 %if (0%{?suse_version} >= 1500)
 BuildRequires: lua-lmod
@@ -57,14 +56,6 @@ BuildRequires: Lmod
 %endif
 
 %description
-The Datatype Comparison (DTCMP) Library provides pre-defined and
-user-defined comparison operations to compare the values of two items
-which can be arbitrary MPI datatypes.
-
-%package common
-Summary:	Datatype Compare Library for sorting and ranking distributed data using MPI
-
-%description common
 The Datatype Comparison (DTCMP) Library provides pre-defined and
 user-defined comparison operations to compare the values of two items
 which can be arbitrary MPI datatypes.
@@ -154,9 +145,7 @@ Development files for %{name}-mpich.
 %endif
 
 %prep
-%setup -q
-%patch1 -p1
-%patch2 -p1
+%autosetup -p1
 # sadly, even though the patch above patches configure also,
 # make still wants to rebuild Makefile.in, saying it's older
 # than Makefile.am, when it's not really
@@ -183,10 +172,6 @@ for mpi in %{?mpi_list}; do
   rm -r %{buildroot}%{_datadir}/dtcmp
   module purge
 done
-
-%files common
-%license LICENSE.TXT
-%doc README.md
 
 %if %{with_openmpi}
 %files openmpi
@@ -227,6 +212,9 @@ done
 %endif
 
 %changelog
+* Wed Feb  1 2023 Brian J. Murrell <brian.murrell@intel.com> - 1.1.4-1
+- New upstream release
+
 * Mon May 17 2021 Brian J. Murrell <brian.murrell@intel.com> - 1.1.1-2
 - Package for openmpi on EL8
 
