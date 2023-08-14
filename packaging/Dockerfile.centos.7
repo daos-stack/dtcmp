@@ -8,6 +8,16 @@
 FROM centos:7
 LABEL maintainer="daos@daos.groups.io"
 
+# Use local repo server if present
+ARG REPO_FILE_URL
+RUN if [ -n "$REPO_FILE_URL" ]; then                             \
+        cd /etc/yum.repos.d/ &&                                  \
+        curl -f -o daos_ci-centos7-artifactory.repo.tmp          \
+             "$REPO_FILE_URL"daos_ci-centos7-artifactory.repo && \
+        rm -f *.repo &&                                          \
+        mv daos_ci-fedora-artifactory.repo{.tmp,};               \
+    fi
+
 # use same UID as host and default value of 1000 if not specified
 ARG UID=1000
 
