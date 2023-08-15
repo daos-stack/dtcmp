@@ -40,16 +40,15 @@
 %global mpi_include_ext -%{_arch}
 %endif
 
-Name:		dtcmp
-Version:	1.1.1
-Release:	2%{?dist}
-Summary:	Datatype Compare Library for sorting and ranking distributed data using MPI
-License:	BSD
-URL:		https://github.com/LLNL/dtcmp
-Source0:	https://github.com/LLNL/dtcmp/releases/download/v%version/dtcmp-%version.tar.gz
-Patch1:		dtcmp-lwgrp.patch
-Patch2:		dtcmp-sover.patch
-BuildRequires:	automake
+Name:     dtcmp
+Version:  1.1.4
+Release:  1%{?dist}
+Summary:  Datatype Compare Library for sorting and ranking distributed data using MPI
+License:  BSD
+URL:      https://github.com/LLNL/dtcmp
+Source0:  https://github.com/LLNL/dtcmp/releases/download/v%version/dtcmp-%version.tar.gz
+Patch1:   dtcmp-sover.patch
+BuildRequires:  automake
 %if (0%{?suse_version} >= 1500)
 BuildRequires: lua-lmod
 %else
@@ -61,19 +60,11 @@ The Datatype Comparison (DTCMP) Library provides pre-defined and
 user-defined comparison operations to compare the values of two items
 which can be arbitrary MPI datatypes.
 
-%package common
-Summary:	Datatype Compare Library for sorting and ranking distributed data using MPI
-
-%description common
-The Datatype Comparison (DTCMP) Library provides pre-defined and
-user-defined comparison operations to compare the values of two items
-which can be arbitrary MPI datatypes.
-
 %if %{with_openmpi}
 %package openmpi
-Summary:	Datatype Compare Library for sorting and ranking distributed data using MPI
-BuildRequires:	openmpi-devel
-BuildRequires:	lwgrp-openmpi-devel
+Summary:  Datatype Compare Library for sorting and ranking distributed data using MPI
+BuildRequires:  openmpi-devel
+BuildRequires:  lwgrp-openmpi-devel
 
 %description openmpi
 The Datatype Comparison (DTCMP) Library provides pre-defined and
@@ -81,9 +72,9 @@ user-defined comparison operations to compare the values of two items
 which can be arbitrary MPI datatypes.
 
 %package openmpi-devel
-Summary:	Development files for %{name}-openmpi
-Requires: lwgrp-openmpi-devel
-Requires:	%{name}-openmpi%{?_isa} = %version-%release
+Summary:  Development files for %{name}-openmpi
+Requires:  lwgrp-openmpi-devel
+Requires:  %{name}-openmpi%{?_isa} = %version-%release
 
 %description openmpi-devel
 Development files for %{name}-openmpi.
@@ -91,9 +82,9 @@ Development files for %{name}-openmpi.
 
 %if %{with_openmpi3}
 %package openmpi3
-Summary:	Datatype Compare Library for sorting and ranking distributed data using MPI
-BuildRequires:	openmpi3-devel
-BuildRequires:	lwgrp-openmpi3-devel
+Summary:  Datatype Compare Library for sorting and ranking distributed data using MPI
+BuildRequires:  openmpi3-devel
+BuildRequires:  lwgrp-openmpi3-devel
 
 %description openmpi3
 The Datatype Comparison (DTCMP) Library provides pre-defined and
@@ -102,19 +93,19 @@ which can be arbitrary MPI datatypes.
 
 %if (0%{?suse_version} >= 1500)
 %package -n libdtcmp0-openmpi3
-Summary:	Datatype Compare Library for sorting and ranking distributed data using MPI
+Summary:  Datatype Compare Library for sorting and ranking distributed data using MPI
 
 %description -n libdtcmp0-openmpi3
 Shared libraries for %{name}-openmpi3.
 %endif
 
 %package openmpi3-devel
-Summary:	Development files for %{name}-openmpi3
-Requires: lwgrp-openmpi3-devel
+Summary:  Development files for %{name}-openmpi3
+Requires:  lwgrp-openmpi3-devel
 %if (0%{?suse_version} >= 1500)
 Requires: libdtcmp0-openmpi3%{_isa} = %version-%release
 %else
-Requires:	%{name}-openmpi3%{?_isa} = %version-%release
+Requires:  %{name}-openmpi3%{?_isa} = %version-%release
 %endif
 
 %description openmpi3-devel
@@ -123,9 +114,9 @@ Development files for %{name}-openmpi3.
 
 %if %{with_mpich}
 %package mpich
-Summary:	Datatype Compare Library for sorting and ranking distributed data using MPI
-BuildRequires:	mpich-devel
-BuildRequires:	lwgrp-mpich-devel
+Summary:  Datatype Compare Library for sorting and ranking distributed data using MPI
+BuildRequires:  mpich-devel
+BuildRequires:  lwgrp-mpich-devel
 
 %description mpich
 The Datatype Comparison (DTCMP) Library provides pre-defined and
@@ -134,19 +125,19 @@ which can be arbitrary MPI datatypes.
 
 %if (0%{?suse_version} >= 1500)
 %package -n libdtcmp0-mpich
-Summary:	Datatype Compare Library for sorting and ranking distributed data using MPI
+Summary:  Datatype Compare Library for sorting and ranking distributed data using MPI
 
 %description -n libdtcmp0-mpich
 Shared libraries for %{name}-mpich.
 %endif
 
 %package mpich-devel
-Summary:	Development files for %{name}-mpich
-Requires: lwgrp-mpich-devel
+Summary:  Development files for %{name}-mpich
+Requires:  lwgrp-mpich-devel
 %if (0%{?suse_version} >= 1500)
-Requires: libdtcmp0-mpich%{_isa} = %version-%release
+Requires:  libdtcmp0-mpich%{_isa} = %version-%release
 %else
-Requires:	%{name}-mpich%{?_isa} = %version-%release
+Requires:  %{name}-mpich%{?_isa} = %version-%release
 %endif
 
 %description mpich-devel
@@ -154,9 +145,7 @@ Development files for %{name}-mpich.
 %endif
 
 %prep
-%setup -q
-%patch1 -p1
-%patch2 -p1
+%autosetup -p1
 # sadly, even though the patch above patches configure also,
 # make still wants to rebuild Makefile.in, saying it's older
 # than Makefile.am, when it's not really
@@ -183,10 +172,6 @@ for mpi in %{?mpi_list}; do
   rm -r %{buildroot}%{_datadir}/dtcmp
   module purge
 done
-
-%files common
-%license LICENSE.TXT
-%doc README.md
 
 %if %{with_openmpi}
 %files openmpi
@@ -227,6 +212,9 @@ done
 %endif
 
 %changelog
+* Tue Jul 04 2023 Brian J. Murrell <brian.murrell@intel.com> - 1.1.4-2
+- New upstream release
+
 * Mon May 17 2021 Brian J. Murrell <brian.murrell@intel.com> - 1.1.1-2
 - Package for openmpi on EL8
 
